@@ -62,7 +62,13 @@ public class ResultadoBusquedaVista extends JDialog {
         resumenArea.setBackground(Color.WHITE);
         resumenArea.setBorder(null);
         resumenArea.setAlignmentX(Component.LEFT_ALIGNMENT);
-        infoPanel.add(resumenArea);
+
+        JScrollPane resumenScrollPane = new JScrollPane(resumenArea);
+        resumenScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        resumenScrollPane.setPreferredSize(new Dimension(450, 110));
+        resumenScrollPane.setMinimumSize(new Dimension(250, 70));
+        resumenScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        infoPanel.add(resumenScrollPane);
 
         mainPanel.add(infoPanel, BorderLayout.CENTER);
 
@@ -149,9 +155,10 @@ public class ResultadoBusquedaVista extends JDialog {
     }
 
     private void establecerPropiedades() {
-        setSize(500, 290);
+        setSize(500, 320);
         setLocationRelativeTo(getParent());
-        setResizable(false);
+        setMinimumSize(new Dimension(400, 260));
+        setResizable(true);
     }
 
     public static void mostrar(JFrame parent, JSONObject pelicula) {

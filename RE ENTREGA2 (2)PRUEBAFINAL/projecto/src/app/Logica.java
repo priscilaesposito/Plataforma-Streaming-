@@ -44,7 +44,7 @@ public class Logica {
             }
 
             // Intentar validar usuario usando el DAO con email
-            Usuario usuarioValidado = usuarioDAO.validarPorEmail(email.trim(), password);
+            Usuario usuarioValidado = usuarioDAO.validarPorEmail(email.trim().toLowerCase(), password);
 
             return usuarioValidado; // Retorna el usuario si es valido, null si no
 
@@ -111,7 +111,7 @@ public class Logica {
             // Crear usuario
             Usuario usuario = new Usuario();
             usuario.setUsername(username);
-            usuario.setCorreo(email);
+            usuario.setCorreo(email.trim().toLowerCase());
             usuario.setContrasenia(password);
             usuario.setID_DATOS_PERSONALES(dpRegistrado.getID_DATOS_PERSONALES());
 

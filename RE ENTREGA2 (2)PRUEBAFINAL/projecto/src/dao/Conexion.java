@@ -3,14 +3,35 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.net.URISyntaxException;
 
 public class Conexion {
-    // Ruta absoluta a la base de datos
-    private static final String DB_PATH = System.getProperty("user.home") + 
-        "/PriEsposito/proyectoFinal/RE ENTREGA2 (2)PRUEBAFINAL/projecto/plataforma_streaming.db";
+    private static final String DB_FILE = System.getProperty(
+        "streaming.db.path", "plataforma_streaming.db");
+    private static final Path DB_PATH = obtenerRutaBaseDatos();
     private static final String DB_URL = "jdbc:sqlite:" + DB_PATH;
 
     private static Connection connection = null;
+
+    private static Path obtenerRutaBaseDatos() {
+        Path rutaConfigurada = Paths.get(DB_FILE);
+        if (rutaConfigurada.isAbsolute()) {
+            return rutaConfigurada.normalize();
+        }
+
+        try {
+            Path ubicacionClases = Paths.get(Conexion.class.getProtectionDomain()
+                    .getCodeSource().getLocation().toURI());
+            Path carpetaProyecto = ubicacionClases.getFileName().toString().equals("bin")
+                    ? ubicacionClases.getParent()
+                    : ubicacionClases;
+            return carpetaProyecto.resolve(rutaConfigurada).toAbsolutePath().normalize();
+        } catch (URISyntaxException | NullPointerException e) {
+            return rutaConfigurada.toAbsolutePath().normalize();
+        }
+    }
 
     //DRIVER
     static {

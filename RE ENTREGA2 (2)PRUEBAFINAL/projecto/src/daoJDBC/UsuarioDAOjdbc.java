@@ -91,7 +91,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
         try (Connection conn = BaseDeDatos.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setString(1, email);
+            pstmt.setString(1, email.trim().toLowerCase());
             pstmt.setString(2, contrasenia);
             
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -140,7 +140,7 @@ public class UsuarioDAOjdbc implements UsuarioDAO {
         try (Connection conn = BaseDeDatos.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setString(1, email);
+            pstmt.setString(1, email.trim().toLowerCase());
             
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
